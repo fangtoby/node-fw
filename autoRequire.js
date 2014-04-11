@@ -1,9 +1,9 @@
 var fs = require('fs');
 
 exports.include = function(controller) {
-
-	var autoInclude;
-
+	if (controller == '') {
+		return false;
+	}
 	var controllerPath = './controller/';
 	/*
 	var files = fs.readdirSync(controllerPath);
@@ -15,10 +15,9 @@ exports.include = function(controller) {
 	});
 	*/
 	var filePath = controllerPath + controller + '.js';
-	console.log(filePath);
 	if(fs.existsSync(filePath)){
 		return require(filePath);
 	}else{
-		//file unexist
+		return false;
 	}
 }

@@ -1,5 +1,10 @@
-function index (argument) {
+function index (req,res) {
 	// body...
+	res.writeHead(200, {
+ 				'Content-Type': 'text/html'
+ 			});
+ 			res.write('received upload:\n\n');
+ 			res.end();
 }
 function view (argument) {
 	// body...

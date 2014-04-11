@@ -8,7 +8,7 @@
 */
  function start(req, res) {
  	console.log('start');
- 	var body = '<form action="/upload" enctype="multipart/form-data" ' +
+ 	var body = '<form action="/handle/upload" enctype="multipart/form-data" ' +
  		'method="post">' +
  		'<input type="file" name="upload" multiple="multiple"><br>' +
  		'<input type="submit" value="Upload">' +
@@ -46,7 +46,7 @@
  				'Content-Type': 'text/html'
  			});
  			res.write('received upload:\n\n');
- 			res.write("<img src='/show?name=" + name + "' />");
+ 			res.write("<img src='/handle/show?name=" + name + "' />");
  			res.end();
  			/*
  			sys.inspect({
