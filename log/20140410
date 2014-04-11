@@ -1,0 +1,35 @@
+appending output to nohup.out
+
+/Users/honest_lies/Developer/Node/learn/app.js:13
+	socket.write("Echo Server\r\n');
+	             ^^^^^^^^^^^^^^^^^^^
+SyntaxError: Unexpected token ILLEGAL
+    at Module._compile (module.js:439:25)
+    at Object.Module._extensions..js (module.js:474:10)
+    at Module.load (module.js:356:32)
+    at Function.Module._load (module.js:312:12)
+    at Function.Module.runMain (module.js:497:10)
+    at startup (node.js:119:16)
+    at node.js:902:3
+appending output to nohup.out
+
+events.js:72
+        throw er; // Unhandled 'error' event
+              ^
+Error: getaddrinfo ENOTFOUND
+    at errnoException (dns.js:37:11)
+    at Object.onanswer [as oncomplete] (dns.js:124:16)
+appending output to nohup.out
+appending output to nohup.out
+
+/Users/honest_lies/Developer/Node/learn/app.js:23
+})();
+^
+SyntaxError: Unexpected token }
+    at Module._compile (module.js:439:25)
+    at Object.Module._extensions..js (module.js:474:10)
+    at Module.load (module.js:356:32)
+    at Function.Module._load (module.js:312:12)
+    at Function.Module.runMain (module.js:497:10)
+    at startup (node.js:119:16)
+    at node.js:902:3
