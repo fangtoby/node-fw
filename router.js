@@ -7,10 +7,7 @@ var handle = require('./controller/handle.js');
 
 function route(route, req, res) {
 	var routes = route.split('/');
-
 	//madefile.init(route);
-	
-	console.log(routes);
 	var defaultController = 'daily';
 
 	var _controller = defaultController;
@@ -40,11 +37,10 @@ function route(route, req, res) {
 		if (typeof currectController[_action] == 'function') {
 			return currectController[_action](req, res);
 		} else {
-			console.log('No request handler found for ' + route);
 			return handle.error(res, 'No request handler found for ' + route);
 		}
 	} else {
-
+		return handle.error(res, 'Controller not init. ' + route);
 	}
 
 }
