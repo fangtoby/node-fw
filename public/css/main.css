@@ -1,0 +1,22 @@
+body{
+	background: #eee;
+	font-size: 11px;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.content{
+	width: 800px;
+	background: #fff;
+	margin: 0 auto;
+	padding: 10px;
+	border: solid #ddd 1px;
+	min-height: 600px;
+}
+.text{
+	width:30px;
+	height: 30px;
+	border: 1px solid #efefef;
+	text-align: center;
+	display: inline-block;
+	padding: 5px;
+	margin: 10px;
+}
