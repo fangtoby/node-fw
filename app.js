@@ -16,7 +16,23 @@
 	var http = require('http');
 	var url = require('url');
 	var router = require('./extends/router.js');
-
+	var os = require('os');
+	
+	var ifaces = os.networkInterfaces();
+	var localIpAddress = '';
+	for (var dev in ifaces) {
+		var alias = 0;
+		ifaces[dev].forEach(function(details) {
+			if (details.family == 'IPv4') {
+				if (dev == 'en1') {
+					localIpAddress = details.address;
+				}
+				console.log(dev + (alias ? ':' + alias : ''), details.address);
+				++alias;
+			}
+		});
+	}
+	console.log(localIpAddress);
 	http.createServer(function(req, res) {
 		//
 		res.param = url.parse(req.url, true).query;
@@ -29,9 +45,9 @@
 
 		router.route(pathName, req, res);
 
-	}).listen(8001, '192.168.1.105');
+	}).listen(8001, localIpAddress);
 
-	console.log('Server running at http://192.168.1.105,port is 8001');
+	console.log('Server running at ' + localIpAddress + ',port is 8001');
 	/*
 	 var net = require('net');
 	 var server = net.createServer(function(socket){
