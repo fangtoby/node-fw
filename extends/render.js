@@ -24,6 +24,23 @@ function write(res, content) {
 	res.end();
 }
 
+function source(res, content, type) {
+	// body...
+	res.writeHead(200, {
+		'Content-Type': 'text/' + type
+	});
+	res.write(content);
+	res.end();
+}
+
+function images(res, content) {
+	res.writeHead(200, {
+		"Content-Type": "images/jpg"
+	});
+	res.write(content, 'binary');
+	res.end();
+}
+
 function renderPartial(pathfile, param) {
 	if (fs.existsSync(pathfile)) {
 		var file = fs.readFileSync(pathfile, 'utf-8');
@@ -41,20 +58,17 @@ function renderPartial(pathfile, param) {
 	}
 }
 module.exports = function() {
+	//css,script request response
 	if (arguments[0] == 'css' || arguments[0] == 'javascript') {
 		var scriptPath = './public/' + arguments[0] + '/' + arguments[1];
 		if (fs.existsSync(scriptPath)) {
-			this.writeHead(200, {
-				'Content-Type': 'text/' + arguments[0]
-			});
-			this.write(fs.readFileSync(scriptPath, 'utf-8'));
-			this.end();
+			var content = fs.readFileSync(scriptPath, 'utf-8');
+			source(this, content, arguments[0]);
 		} else {
 			error(this, scriptPath + 'file does not exist.');
 		}
 		return;
 	}
-	
 	var action = typeof arguments[0] == 'String' ? arguments[0] : this.action;
 
 	var htmlPath = './view/' + this.controller + '/' + action + '.html';
@@ -67,10 +81,15 @@ module.exports = function() {
 		plain(this, param);
 		return;
 	}
+	if (arguments[0] == 'images') {
+		images(this,param['file'])
+		return;
+	}
 	if (fs.existsSync(htmlPath)) {
 		var content = fs.readFileSync(htmlPath, 'utf-8');
 		var content = content.replace(/\t|\n/g, '');
 		var tag = this.config.viewCodeTag;
+		//replace param 
 		content = content.replace(/<%=(.*?)%>/g, function() {
 			if (typeof param[arguments[1]] != 'undefined') {
 				return param[arguments[1]];
@@ -78,6 +97,7 @@ module.exports = function() {
 				return 'undefined';
 			}
 		});
+		//run script
 		var content = content.replace(tag, function() {
 			var result = eval('(' + 'function(){' + arguments[1] + '}' + ')')();
 			if (typeof result != 'undefined') {
@@ -86,6 +106,7 @@ module.exports = function() {
 				return '';
 			}
 		});
+		//add view layouts
 		if ((typeof arguments[2] == 'undefined') || arguments[2] == '') {
 			var layouts = './view/layouts/' + this.config.viewLayouts;
 			content = renderPartial(layouts, {

@@ -1,12 +1,16 @@
-(function  (argument) {
-	// body...
-	// alert('Hello');
-	setTimeout(function (argument) {
+// body...
+// alert('Hello');
+(function() {
+	setTimeout(function() {
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET','/handle/index?request=ajax',true);
+		xhr.open('GET', '/handle/index?request=ajax', true);
 		xhr.send();
-		xhr.onreadystatechange = function(){
-			console.log(JSON.parse(xhr.responseText));	
+		xhr.onreadystatechange = function() {
+			if (xhr.status == 200 && xhr.readyState == 4) {
+				console.log(xhr.responseText);
+				var data = JSON.parse(xhr.responseText);
+				console.log(data);
+			}
 		};
 	}, 5000);
 })();

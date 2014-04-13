@@ -1,25 +1,32 @@
-function index (argument) {
-	// body...
-}
-function view (argument) {
-	// body...
-}
-function menu (argument) {
-	// body...
-}
-function form (argument) {
-	// body...
-}
-function source (argument) {
-	// body...
-}
-function item (argument) {
-	// body...
-}
-
-exports.index = index;
-exports.view = view;
-exports.menu= menu;
-exports.form = form;
-exports.source = source;
-exports.item = item;
+module.exports = {
+ 	index: function() {
+ 		// body...
+ 		this.res.render('index', {
+ 			'time': new Date(),
+ 		});
+ 	},
+ 	form: function() {
+ 		// body...
+ 		this.res.render('form', {
+ 			'time': new Date(),
+ 		});
+ 	},
+ 	menu: function() {
+ 		// body...
+ 		this.res.render('menu', {
+ 			'time': new Date(),
+ 		});
+ 	},
+ 	model: function() {
+ 		// body...
+ 		this.res.render('model', {
+ 			'time': new Date(),
+ 		});
+ 	},
+ 	view: function() {
+ 		// body...
+ 		this.res.render('view', {
+ 			'time': new Date(),
+ 		});
+ 	},
+ };

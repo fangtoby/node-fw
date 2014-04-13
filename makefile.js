@@ -13,7 +13,7 @@
  				});
  			}
  		});
- 		var _basicView = ['view', '_view', '_item', 'menu', 'form', 'model', 'index'];
+ 		var _basicView = ['view', '_view', '_item', 'menu', 'form', 'model','start', 'index','upload'];
  		var _viewPathSeq = 'view/';
  		var _suffix = '.html';
 

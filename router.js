@@ -1,16 +1,11 @@
 var madefile = require('./makefile.js');
-//auto include controller modules
 var requireFunc = require('./autoRequire.js');
-
-var handle = require('./controller/handle.js');
-
 var access = require('./extends/log.js');
 
 
 function route(route, req, res) {
 	var routes = route.split('/');
 	var defaultController = 'daily';
-
 	var _controller = defaultController;
 	var _action = 'index';
 
@@ -36,21 +31,42 @@ function route(route, req, res) {
 		res.render(_controller, _action);
 		return;
 	}
-	if (res.config.log.status) {
-		access(req.headers);
+	//get ip address
+	var ipAddr = req.headers['x-forwarded-for'];
+	if (ipAddr) {
+		var list = ipAddr.split(',');
+		ipAddr = list[list.length - 1];
+	} else {
+		ipAddr = req.connection.remoteAddress;
 	}
+	//add log
+	if (res.config.log.status) {
+		var logData = {
+			'ip': ipAddr,
+			'Date': new Date(),
+			'user-agent': req.headers['user-agent'],
+		}
+		access(logData);
+	}
+	//
 	res.action = _action;
 	res.controller = _controller;
+	//auto make file
 	madefile.init(route);
+	//
+	//load correct controller && action
 	var currectController = requireFunc.include(_controller);
 	if (typeof currectController == 'object') {
 		if (typeof currectController[_action] == 'function') {
-			return currectController[_action](req, res);
+			currectController.res = res;
+			currectController.req = req;
+			currectController[_action]();
+			//return currectController[_action](req, res);
 		} else {
-			return handle.error(res, 'No request handler found for ' + route);
+			return res.render('error', 'No request handler found for ' + route);
 		}
 	} else {
-		return handle.error(res, 'Controller not init. ' + route);
+		return res.render('error','Controller not init. ' + route);
 	}
 
 }
