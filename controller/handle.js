@@ -11,6 +11,7 @@
  	index: function() {
  		this.res.render('index', {
  			'age': 234,
+ 			'Date': new Date().getTime(),
  			'infor': JSON.stringify(this.req.headers)
  		});
  	},

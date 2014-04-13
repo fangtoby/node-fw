@@ -20,3 +20,18 @@ body{
 	padding: 5px;
 	margin: 10px;
 }
+.divitem{
+	margin-bottom: 10px;
+	padding: 5px;
+	background: #eee;
+}
+.innerdiv{
+	background: #fff;
+	border: solid 1px #ddd;
+	padding: 10px;
+}
+button{
+	padding: 10px;
+	background: #fff;
+	border: solid 1px #ccc;
+}
