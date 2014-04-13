@@ -6,15 +6,19 @@
 
 	http.createServer(function(req, res) {
 		//
+		res.param = url.parse(req.url,true).query;
+		res.config = require('./config.js');
+		res.render = require('./extends/render.js')
+
 		var pathName = url.parse(req.url).pathname;
 		//
 		console.log("Request for " + pathName + " received");
 
 		router.route(pathName, req, res);
 
-	}).listen(8001, '127.0.0.1');
+	}).listen(8001, '192.168.1.105');
 
-	console.log('Server running at http://127.0.0.1,port is 8001');
+	console.log('Server running at http://192.168.1.105,port is 8001');
 	/*
 	 var net = require('net');
 	 var server = net.createServer(function(socket){

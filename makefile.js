@@ -2,7 +2,6 @@
 
  exports.init = function(route) {
  	var controller = route.split('/');
- 	console.log(controller);
  	if (controller.length > 2) {
  		var controllerName = controller[1];
  		var path = 'controller/' + controllerName + '.js';
@@ -16,7 +15,7 @@
  		});
  		var _basicView = ['view', '_view', '_item', 'menu', 'form', 'model', 'index'];
  		var _viewPathSeq = 'view/';
- 		var _suffix = '.js';
+ 		var _suffix = '.html';
 
  		var _viewFieldPath = _viewPathSeq + controllerName;
 

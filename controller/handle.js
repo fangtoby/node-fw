@@ -47,21 +47,32 @@
 
  function find(req, res) {
  	// body...
+
  	var now = new Date();
  	var startTime = now.getTime();
- 	db.add('select * from consumertype where Description = 500', function(error, result) {
+ 	db.find('select * from consumertype where Description = 500', function(error, result) {
  		if (!error) {
  			var now = new Date();
  			var endTime = now.getTime();
- 			res.writeHead(200, {
- 				"Content-Type": "text/html"
+
+ 			var content = 't:' + startTime + '<br \>t:' + endTime + ' select count ' + result.length;
+ 			res.render('find', {
+ 				'age': 12,
+ 				'content': content,
+ 				infor : JSON.stringify(req.headers)
  			});
- 			res.write('t:'+startTime+'<br \>t:'+endTime+' select count ' + result.length + "\n");
- 			res.end();
  		} else {
  			console.log(error);
  		}
  	})
+ }
+
+ function index(req, res) {
+ 	// body...
+ 	res.render('index', {
+ 		'age': 234,
+ 		'infor': JSON.stringify(req.headers)
+ 	});
  }
 
  function news(req, res) {
@@ -142,6 +153,7 @@
  	res.write(error + "\n");
  	res.end();
  }
+ exports.index = index;
  exports.add = add;
  exports.find = find;
  exports.start = start;

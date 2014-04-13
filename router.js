@@ -4,10 +4,11 @@ var requireFunc = require('./autoRequire.js');
 
 var handle = require('./controller/handle.js');
 
+var access = require('./extends/log.js');
+
 
 function route(route, req, res) {
 	var routes = route.split('/');
-	//madefile.init(route);
 	var defaultController = 'daily';
 
 	var _controller = defaultController;
@@ -31,8 +32,17 @@ function route(route, req, res) {
 			//module 
 			break;
 	}
+	if (_controller == 'css' || _controller == 'javascript') {
+		res.render(_controller, _action);
+		return;
+	}
+	if (res.config.log.status) {
+		access(req.headers);
+	}
+	res.action = _action;
+	res.controller = _controller;
+	madefile.init(route);
 	var currectController = requireFunc.include(_controller);
-
 	if (typeof currectController == 'object') {
 		if (typeof currectController[_action] == 'function') {
 			return currectController[_action](req, res);
