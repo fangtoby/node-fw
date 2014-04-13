@@ -1,13 +1,26 @@
+/*
+ *  1 路由模块 实现
+ *	2 数据库操作模块 实现
+ *	3 自动生成文件模块 实现
+ *	4 根据路由参数,获取加载相应控制器模块 实现
+ * 	5 视图渲染模块 实现 html,javascript,css,ico
+ *  6 访问日志模块 实现
+ *
+ *  7 mvc controller模块实现
+ *  8 mvc view 模块 实现
+ *  9 mvc model 模块 未实现
+ *	10 使用配置文件 实现
+ */
 (function() {
 	//Create Web Server 
 	var http = require('http');
 	var url = require('url');
-	var router = require('./router.js');
+	var router = require('./extends/router.js');
 
 	http.createServer(function(req, res) {
 		//
-		res.param = url.parse(req.url,true).query;
-		res.config = require('./config.js');
+		res.param = url.parse(req.url, true).query;
+		res.config = require('./main/config.js');
 		res.render = require('./extends/render.js')
 
 		var pathName = url.parse(req.url).pathname;

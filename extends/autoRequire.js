@@ -15,9 +15,11 @@ exports.include = function(controller) {
 	});
 	*/
 	var filePath = controllerPath + controller + '.js';
-	if(fs.existsSync(filePath)){
-		return require(filePath);
-	}else{
+	//fs 的相对路径是全局的
+	if (fs.existsSync(filePath)) {
+		//require 的路径是相对于这个文件的
+		return require('.' + filePath);
+	} else {
 		return false;
 	}
 }

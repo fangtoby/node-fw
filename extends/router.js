@@ -1,7 +1,6 @@
 var madefile = require('./makefile.js');
 var requireFunc = require('./autoRequire.js');
-var access = require('./extends/log.js');
-
+var access = require('./log.js');
 
 function route(route, req, res) {
 	var routes = route.split('/');
@@ -27,7 +26,8 @@ function route(route, req, res) {
 			//module 
 			break;
 	}
-	if (_controller == 'css' || _controller == 'javascript') {
+	// render css , javascript , ico 
+	if (_controller == 'css' || _controller == 'javascript' || _controller == 'favicon.ico') {
 		res.render(_controller, _action);
 		return;
 	}
@@ -66,7 +66,7 @@ function route(route, req, res) {
 			return res.render('error', 'No request handler found for ' + route);
 		}
 	} else {
-		return res.render('error','Controller not init. ' + route);
+		return res.render('error', 'Controller not init. ' + route);
 	}
 
 }

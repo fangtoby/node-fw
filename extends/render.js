@@ -41,6 +41,15 @@ function images(res, content) {
 	res.end();
 }
 
+function icon(res, content) {
+	res.writeHead(200, {
+		'Content-Type': 'image/x-icon'
+	});
+	res.write(content, 'binary');
+	res.end();
+	return;
+}
+
 function renderPartial(pathfile, param) {
 	if (fs.existsSync(pathfile)) {
 		var file = fs.readFileSync(pathfile, 'utf-8');
@@ -59,6 +68,16 @@ function renderPartial(pathfile, param) {
 }
 module.exports = function() {
 	//css,script request response
+	var self = this;
+	if (arguments[0] == 'favicon.ico') {
+		var iconPath = "./" + arguments[0];
+		if (fs.existsSync(iconPath)) {
+			var file = fs.readFileSync(iconPath, 'binary');
+			icon(self, file);
+		} else {
+			console.log('ico file dose not exist in ' + iconPath);
+		}
+	}
 	if (arguments[0] == 'css' || arguments[0] == 'javascript') {
 		var scriptPath = './public/' + arguments[0] + '/' + arguments[1];
 		if (fs.existsSync(scriptPath)) {
@@ -82,8 +101,11 @@ module.exports = function() {
 		return;
 	}
 	if (arguments[0] == 'images') {
-		images(this,param['file'])
+		images(this, param['file'])
 		return;
+	}
+	if (arguments[0] == 'error') {
+		error(this, arguments[1]);
 	}
 	if (fs.existsSync(htmlPath)) {
 		var content = fs.readFileSync(htmlPath, 'utf-8');

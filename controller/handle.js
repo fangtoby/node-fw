@@ -2,7 +2,7 @@
  var sys = require('sys');
  var fs = require('fs');
  var url = require('url');
- var db = require('../db.js');
+ var db = require('../extends/db.js');
  /*
 	 	var arg = url.pase(req.url).query; //arg => age=100&id=2
 		var param = querystring.parse() //param => { age :100 ,id :2}
@@ -78,7 +78,7 @@
  				self.res.render('find', {
  					'age': 12,
  					'content': content,
- 					infor: JSON.stringify(self.req.headers)
+ 					'infor': JSON.stringify(self.req.headers),
  				});
  			} else {
  				console.log(error);
