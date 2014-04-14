@@ -111,7 +111,7 @@ Failed transactions:	           0
 Longest transaction:	        0.07
 Shortest transaction:	        0.00
 
-fs≈性能问题
+fs的性能问题
 /usr/bin/siege -r100 -c1000 http://192.168.1.105:8001/handle/index
  return binding.open(pathModule._makeLong(path), stringToFlags(flags), mode);
                  ^

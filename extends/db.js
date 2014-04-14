@@ -7,6 +7,7 @@ var pool = mysql.createPool({
 	'database': 'financialmanagement',
 	debug: false,
 });
+
 module.exports = {
 	init: function(callback) {
 		// body...
