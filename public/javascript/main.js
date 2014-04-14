@@ -20,12 +20,12 @@
 						var newInfor = document.createElement('div');
 						newInfor.setAttribute('class', 'divitem');
 						var innserTml = document.createElement('div');
-						innserTml.setAttribute('class','innerdiv');
-						innserTml.innerHTML =xhr.responseText; 
+						innserTml.setAttribute('class', 'innerdiv');
+						innserTml.innerHTML = xhr.responseText;
 						newInfor.appendChild(innserTml);
-						
+
 						if (classElementPure.length) {
-							document.getElementById('infor').insertBefore(newInfor,classElementPure[0]);
+							document.getElementById('infor').insertBefore(newInfor, classElementPure[0]);
 						} else {
 							console.log(newInfor);
 							document.getElementById('infor').appendChild(newInfor);

@@ -10,15 +10,9 @@ module.exports = function(argument) {
 		if (!fs.existsSync(errorLogPath)) {
 			fs.open(errorLogPath, 'w', '0777');
 		}
-		fs.appendFile(errorLogPath, JSON.stringify(headers), function(err) {
-			if (err) throw err;
-			console.log('The "data to append" was appended to file!');
-		});
-		fs.appendFile(errorLogPath, '\n', function(err) {
-			if (err) {
-				throw err;
-			} 
-		});
+		if(fs.appendFileSync(errorLogPath, JSON.stringify(headers))){
+			console.log('add access log success.');
+		}
 	} else{
 		console.log('log error.');
 	}

@@ -17,7 +17,9 @@
 	var url = require('url');
 	var router = require('./extends/router.js');
 	var os = require('os');
-	
+	var config = require('./main/config.js');
+	var render = require('./extends/render.js');
+
 	var ifaces = os.networkInterfaces();
 	var localIpAddress = '';
 	for (var dev in ifaces) {
@@ -36,14 +38,25 @@
 	http.createServer(function(req, res) {
 		//
 		res.param = url.parse(req.url, true).query;
-		res.config = require('./main/config.js');
-		res.render = require('./extends/render.js')
+		res.config = config;
+		res.render = render;
+		//set Request Timeout
+		req.socket.removeAllListeners('timeout');
+		req.socket.setTimeout(5000);
+		req.socket.on('timeout', function() {
+			console.log('socket timeout');
+			res.render('error', 'Request timeout.');
+			return;
+		});
 
 		var pathName = url.parse(req.url).pathname;
-		//
 		console.log("Request for " + pathName + " received");
+		try {
+			router.route(pathName, req, res);
+		} catch (e) {
+			res.render('error', e);
+		}
 
-		router.route(pathName, req, res);
 
 	}).listen(8001, localIpAddress);
 
@@ -58,3 +71,43 @@
 	 server.listen(8001,'192.168,2.62');
 	 */
 })();
+/*
+ 启动服务，运用守护进程
+
+ sudo node spawn.js
+
+启动服务
+
+../node_modules/nodemon/bin/nodemon.js app.js
+
+统计代码的行数 
+find ./ -name "*.js" |xargs cat | wc -l
+
+测试服务器负载 网站性能
+http://www.oschina.net/question/223693_44078
+
+brew install siege
+sudo ln -s /usr/local/Cellar/siege/3.0.5/bin/siege /usr/bin/siege
+/usr/bin/siege -r10 -c100 http://192.168.1.105:8001/handle/find
+
+Transactions:		        1000 hits
+Availability:		      100.00 %
+Elapsed time:		        6.66 secs
+Data transferred:	        2.83 MB
+Response time:		        0.01 secs
+Transaction rate:	      150.15 trans/sec
+Throughput:		        0.42 MB/sec
+Concurrency:		        0.86
+Successful transactions:        1000
+Failed transactions:	           0
+Longest transaction:	        0.07
+Shortest transaction:	        0.00
+
+fs≈性能问题
+/usr/bin/siege -r100 -c1000 http://192.168.1.105:8001/handle/index
+  return binding.open(pathModule._makeLong(path), stringToFlags(flags), mode);
+                 ^
+Error: EMFILE, too many open files './view/handle/index.html'
+尽量缓存数据，避免在应用中频繁读写io文件数据
+
+*/

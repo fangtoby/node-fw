@@ -1,78 +1,66 @@
-var mysql = require('mysql').createConnection({
+var mysql = require('mysql');
+
+var pool = mysql.createPool({
 	'host': '192.168.1.108',
 	'user': 'root',
 	'password': 'root',
-	'database': 'financialmanagement'
+	'database': 'financialmanagement',
+	debug: false,
 });
-
-var self = this;
-
-function init(callback) {
-	// body...
-	mysql.query('use financialmanagement', function(error, results) {
-		if (error) {
-			console.log(error);
-		} else {
-			console.log('connection mysql success.');
-		}
-		callback(error);
-	});
-}
-
-function add(sql, callback) {
-	// body...
-	this.init(function(error) {
-		if (!error) {
-			mysql.query(sql, function(error, result) {
-				// body...
-				callback(error, result);
-			})
-			console.log(sql);
-		} else {
-			console.log(error);
-		}
-	});
-
-	return self;
-}
-
-function sel(sql, callback) {
-	this.init(function(error) {
-		if (!error) {
-			mysql.query(sql, function(error, results, fields) {
-				callback(error, results, fields);
+module.exports = {
+	init: function(callback) {
+		// body...
+		pool.getConnection(function(error, connection) {
+			connection.query('use financialmanagement', function(error, results) {
+				if (error) {
+					callback(error);
+				} else {
+					console.log('connection mysql success.');
+				}
 			});
-		} else {
-			console.log(error);
-		}
-	});
-}
+		});
 
-function find(sql, callback) {
-	this.init(function(error) {
-		if (!error) {
-			mysql.query(sql, function(error, results, fields) {
-				callback(error, results, fields);
-			});
-		} else {
-			console.log(error);
-		}
-	});
-	return self;
-}
-
-function del(sql) {
-	// body...
-}
-
-
-function upd(sql) {
-	// body...
-}
-
-exports.init = init;
-exports.upd = upd;
-exports.sel = sel;
-exports.add = add;
-exports.del = del;
-exports.find = find;
+	},
+	add: function(sql, callback) {
+		// body...
+		pool.getConnection(function(error, connection) {
+			if (!error) {
+				connection.query(sql, function(error, results) {
+					callback(error, results);
+					connection.release();
+				});
+			} else {
+				console.log(error);
+			}
+		});
+	},
+	sel: function(sql, callback) {
+		pool.getConnection(function(error, connection) {
+			if (!error) {
+				connection.query(sql, function(error, results, fields) {
+					callback(error, results, fields);
+				});
+			} else {
+				console.log(error);
+			}
+		});
+	},
+	find: function(sql, callback) {
+		pool.getConnection(function(error, connection) {
+			if (!error) {
+				connection.query(sql, function(error, results, fields) {
+					callback(error, results, fields);
+					connection.release();
+				});
+			} else {
+				console.log(error);
+			}
+		});
+	},
+	del: function(sql) {
+		// body...
+	},
+	upd: function(sql) {
+		// body...
+	},
+};
