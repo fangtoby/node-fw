@@ -22,5 +22,3 @@ if [ ! -f $dirFullName ]; then
 fi
 
 (nohup node app.js &) 2>>$dirFullName 
-
-

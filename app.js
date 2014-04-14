@@ -23,67 +23,57 @@
 
  ＊	15 未知问题 系统稳定性
  */
-(function()
-{
-    //Create Web Server
-    var http = require('http');
-    var url = require('url');
-    var router = require('./extends/router.js');
-    var os = require('os');
-    var config = require('./main/config.js');
-    var render = require('./extends/render.js');
+(function() {
+	//Create Web Server
+	var http = require('http');
+	var url = require('url');
+	var router = require('./extends/router.js');
+	var os = require('os');
+	var config = require('./main/config.js');
+	var render = require('./extends/render.js');
 
-    var ifaces = os.networkInterfaces();
-    var localIpAddress = '';
-    for (var dev in ifaces)
-    {
-        var alias = 0;
-        ifaces[dev].forEach(function(details)
-        {
-            if (details.family == 'IPv4')
-            {
-                if (dev == 'en1')
-                {
-                    localIpAddress = details.address;
-                }
-                console.log(dev + (alias ? ':' + alias : ''), details.address);
-                ++alias;
-            }
-        });
-    }
-    console.log(localIpAddress);
-    http.createServer(function(req, res)
-    {
-        //
-        res.param = url.parse(req.url, true).query;
-        res.config = config;
-        res.render = render;
-        //set Request Timeout
-        req.socket.removeAllListeners('timeout');
-        req.socket.setTimeout(5000);
-        req.socket.on('timeout', function()
-        {
-            console.log('socket timeout');
-            res.render('error', 'Request timeout.');
-            return;
-        });
+	var ifaces = os.networkInterfaces();
+	var localIpAddress = '';
+	for (var dev in ifaces) {
+		var alias = 0;
+		ifaces[dev].forEach(function(details) {
+			if (details.family == 'IPv4') {
+				if (dev == 'en1') {
+					localIpAddress = details.address;
+				}
+				console.log(dev + (alias ? ':' + alias : ''), details.address);
+				++alias;
+			}
+		});
+	}
+	console.log(localIpAddress);
+	http.createServer(function(req, res) {
+		//
+		res.param = url.parse(req.url, true).query;
+		res.config = config;
+		res.render = render;
+		//set Request Timeout
+		req.socket.removeAllListeners('timeout');
+		req.socket.setTimeout(5000);
+		req.socket.on('timeout', function() {
+			console.log('socket timeout');
+			res.render('error', 'Request timeout.');
+			return;
+		});
 
-        var pathName = url.parse(req.url).pathname;
-        console.log("Request for " + pathName + " received");
-        try
-        {
-            router.route(pathName, req, res);
-        }
-        catch (e)
-        {
-            res.render('error', e);
-        }
+		var pathName = url.parse(req.url).pathname;
+		console.log("Request for " + pathName + " received");
+		try {
+			router.route(pathName, req, res);
+		} catch (e) {
+			res.render('error', e);
+		}
 
 
-    }).listen(8001, localIpAddress);
+	}).listen(8001, localIpAddress);
 
-    console.log('Server running at ' + localIpAddress + ',port is 8001');
-    /*
+	console.log('Server running at ' + localIpAddress + ',port is 8001');
+	/*
      var net = require('net');
      var server = net.createServer(function(socket){
     	socket.write('Echo Server\r\n');
