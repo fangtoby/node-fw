@@ -18,70 +18,80 @@
  *		a: 请求超时处理 实现
  *		b: 错误跳转处理 实现
  *		c: fs 文件读写瓶颈，解决方案，实现在生产环境中 实现文件缓存 未实现 x
- *		d: mysql 数据库链接问题 未清晰 
+ *		d: mysql 数据库链接问题 未清晰
  *  	e: 使用缓存数据库缓存 数据 未实现
 
  ＊	15 未知问题 系统稳定性
  */
-(function() {
-	//Create Web Server 
-	var http = require('http');
-	var url = require('url');
-	var router = require('./extends/router.js');
-	var os = require('os');
-	var config = require('./main/config.js');
-	var render = require('./extends/render.js');
+(function()
+{
+    //Create Web Server
+    var http = require('http');
+    var url = require('url');
+    var router = require('./extends/router.js');
+    var os = require('os');
+    var config = require('./main/config.js');
+    var render = require('./extends/render.js');
 
-	var ifaces = os.networkInterfaces();
-	var localIpAddress = '';
-	for (var dev in ifaces) {
-		var alias = 0;
-		ifaces[dev].forEach(function(details) {
-			if (details.family == 'IPv4') {
-				if (dev == 'en1') {
-					localIpAddress = details.address;
-				}
-				console.log(dev + (alias ? ':' + alias : ''), details.address);
-				++alias;
-			}
-		});
-	}
-	console.log(localIpAddress);
-	http.createServer(function(req, res) {
-		//
-		res.param = url.parse(req.url, true).query;
-		res.config = config;
-		res.render = render;
-		//set Request Timeout
-		req.socket.removeAllListeners('timeout');
-		req.socket.setTimeout(5000);
-		req.socket.on('timeout', function() {
-			console.log('socket timeout');
-			res.render('error', 'Request timeout.');
-			return;
-		});
+    var ifaces = os.networkInterfaces();
+    var localIpAddress = '';
+    for (var dev in ifaces)
+    {
+        var alias = 0;
+        ifaces[dev].forEach(function(details)
+        {
+            if (details.family == 'IPv4')
+            {
+                if (dev == 'en1')
+                {
+                    localIpAddress = details.address;
+                }
+                console.log(dev + (alias ? ':' + alias : ''), details.address);
+                ++alias;
+            }
+        });
+    }
+    console.log(localIpAddress);
+    http.createServer(function(req, res)
+    {
+        //
+        res.param = url.parse(req.url, true).query;
+        res.config = config;
+        res.render = render;
+        //set Request Timeout
+        req.socket.removeAllListeners('timeout');
+        req.socket.setTimeout(5000);
+        req.socket.on('timeout', function()
+        {
+            console.log('socket timeout');
+            res.render('error', 'Request timeout.');
+            return;
+        });
 
-		var pathName = url.parse(req.url).pathname;
-		console.log("Request for " + pathName + " received");
-		try {
-			router.route(pathName, req, res);
-		} catch (e) {
-			res.render('error', e);
-		}
+        var pathName = url.parse(req.url).pathname;
+        console.log("Request for " + pathName + " received");
+        try
+        {
+            router.route(pathName, req, res);
+        }
+        catch (e)
+        {
+            res.render('error', e);
+        }
 
 
-	}).listen(8001, localIpAddress);
+    }).listen(8001, localIpAddress);
 
-	console.log('Server running at ' + localIpAddress + ',port is 8001');
-	/*
-	 var net = require('net');
-	 var server = net.createServer(function(socket){
-		socket.write('Echo Server\r\n');
-		socket.pipe(socket);
-		 });
+    console.log('Server running at ' + localIpAddress + ',port is 8001');
+    /*
+     var net = require('net');
+     var server = net.createServer(function(socket){
+    	socket.write('Echo Server\r\n');
+    	socket.pipe(socket);
+    	 });
 
-	 server.listen(8001,'192.168,2.62');
-	 */
+     server.listen(8001,'192.168,2.62');
+     */
 })();
 /*
  启动服务，运用守护进程
@@ -92,7 +102,7 @@
 
 ../node_modules/nodemon/bin/nodemon.js app.js
 
-统计代码的行数 
+统计代码的行数
 find ./ -name "*.js" |xargs cat | wc -l
 
 测试服务器负载 网站性能
