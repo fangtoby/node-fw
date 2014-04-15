@@ -21,17 +21,22 @@
  *		d: mysql 数据库链接问题 未清晰
  *		e: 使用缓存数据库缓存 数据 未实现
  *	15 未知问题 系统稳定性
+ *	16 缓存静态文件 防止频繁访问i/o 系统性能优化提升
  */
 (function() {
 	var http = require('http');
 	var url = require('url');
-	var router = require('./extends/router.js');
+	var fs = require('fs');
 	var os = require('os');
+
+	var router = require('./extends/router.js');
 	var config = require('./main/config.js');
 	var render = require('./extends/render.js');
 
+
 	var ifaces = os.networkInterfaces();
 	var localIpAddress = '';
+
 	for (var dev in ifaces) {
 		var alias = 0;
 		ifaces[dev].forEach(function(details) {
@@ -45,8 +50,33 @@
 		});
 	}
 
+	var cache = function (fileName) {
+		// body...
+		var cacheObject = {
+			//filename : content.string
+		};
+		var viewsFieldPath = './view/';
+		var getAllFiles = function(dir) {
+			
+		};
+		files.forEach(function(file) {
+			// body...
+			var viewsFilePath = viewsFieldPath + file,
+				stat = fs.lstatSync(viewsFilePath);
+			if (!stat.isDirectory()) {
+
+			}
+			console.log(message);
+		});
+		fs.readdirSync(path);
+		var content = fs.readFileSync(htmlPath, 'utf-8');
+	};
+	var momery = 1;
+
 	http.createServer(function(req, res) {
 		//
+		console.log(momery++);
+
 		res.param = url.parse(req.url, true).query;
 		res.config = config;
 		res.render = render;
