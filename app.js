@@ -22,6 +22,9 @@
  *		e: 使用缓存数据库缓存 数据 未实现
  *	15 未知问题 系统稳定性
  *	16 缓存静态文件 防止频繁访问i/o 系统性能优化提升
+ *		a: 初步实现 缓存视图文件
+ *		b:
+ *
  */
 (function() {
 	var http = require('http');
@@ -50,27 +53,56 @@
 		});
 	}
 
-	var cache = function (fileName) {
-		// body...
-		var cacheObject = {
-			//filename : content.string
-		};
-		var viewsFieldPath = './view/';
-		var getAllFiles = function(dir) {
-			
-		};
-		files.forEach(function(file) {
-			// body...
-			var viewsFilePath = viewsFieldPath + file,
-				stat = fs.lstatSync(viewsFilePath);
+	var cache = {
+		path: '',
+		cacheStatus: false,
+		cacheObject: {
+			//path:content
+		},
+		addToCache: function(path) {
+			var self = this;
+			var stat = fs.lstatSync(path);
 			if (!stat.isDirectory()) {
-
+				this.cacheObject[path] = fs.readFileSync(path, 'utf-8');
+			} else {
+				var files = fs.readdirSync(path);
+				files.forEach(function(file) {
+					var pathName = path + '/' + file;
+					self.addToCache(pathName);
+				});
 			}
-			console.log(message);
-		});
-		fs.readdirSync(path);
-		var content = fs.readFileSync(htmlPath, 'utf-8');
+		},
+		getFromCache: function(path) {
+			if (fs.existsSync(path)) {
+				if (this.cacheObject[path] != 'undefined') {
+					return this.cacheObject[path];
+				} else {
+					this.addToCache(path);
+				}
+			} else {
+				console.log(path + ' file dones not exist. can\'t be cache');
+				return false;
+			}
+		},
+		start: function() {
+			// body...
+			this.cacheStatus = true;
+			var path = arguments[0];
+			this.path = path;
+			this.addToCache(path);
+			return this;
+		},
+		clear: function(argument) {
+			// body...
+			this.cacheObject = {};
+		},
+		reflush: function() {
+			this.addToCache(this.path)
+		}
 	};
+
+	cache.start('./view');
+
 	var momery = 1;
 
 	http.createServer(function(req, res) {
@@ -78,6 +110,7 @@
 		console.log(momery++);
 
 		res.param = url.parse(req.url, true).query;
+
 		res.config = config;
 		res.render = render;
 		//set Request Timeout
@@ -88,8 +121,16 @@
 			res.render('error', 'Request timeout.');
 			return;
 		});
-
 		var pathName = url.parse(req.url).pathname;
+		if (cache.cacheStatus) {
+			var routes = pathName.split('/');
+			var _controller = routes[1];
+			var _action = routes[2] ? routes[2] : 'index';
+			var path = './view/' + _controller + '/' + _action + '.html';
+			console.log(path);
+			res.cacheView = cache.getFromCache(path);
+			console.log(res.cacheView);
+		}
 		console.log("Request for " + pathName + " received");
 		try {
 			router.route(pathName, req, res);

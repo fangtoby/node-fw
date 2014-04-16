@@ -95,26 +95,27 @@
 	function funcc(argument) {
 		// body...
 		this.attri = 12;
-		var func = function(argument) {
+		var funcs = function(argument) {
 			// body...
 			this.name = 'rgb';
-			console.log(this);
+			console.log(typeof this);
 		};
-		func.prototype.extend = function(argument) {
+		funcs.prototype.extend = function(argument) {
 			// body...
 			for (var a in argument) {
 				this[a] = argument[a];
 			}
+			console.log(this);
 			console.log('hello');
 		};
-		console.log(func.name);
-		console.log(func.extend({
+		console.log(funcs.prototype);
+		funcs.prototype.extend({
 			'a': 23
-		}));
-		console.log(func());
+		});
+		funcs();
 		return func;
 	}
-	console.log(funcc(2));
+	funcc(2);
 	// objectA.prototype.AAA = function(argument) {
 	// 	// body...
 	// 	for (var m in argument) {

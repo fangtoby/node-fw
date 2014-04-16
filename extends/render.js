@@ -108,7 +108,15 @@ module.exports = function() {
 		error(this, arguments[1]);
 	}
 	if (fs.existsSync(htmlPath)) {
-		var content = fs.readFileSync(htmlPath, 'utf-8');
+		var content 
+		if(this.cacheView){
+			console.log('cache ..........');
+			content = this.cacheView;
+			console.log('cache ..........');
+		}else{
+			content = fs.readFileSync(htmlPath, 'utf-8');
+		}
+		
 		var content = content.replace(/\t|\n/g, '');
 		var tag = this.config.viewCodeTag;
 		//replace param
