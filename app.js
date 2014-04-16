@@ -29,79 +29,16 @@
 (function() {
 	var http = require('http');
 	var url = require('url');
-	var fs = require('fs');
-	var os = require('os');
 
 	var router = require('./extends/router.js');
 	var config = require('./main/config.js');
 	var render = require('./extends/render.js');
+	var mtil = require('./extends/util.js');
+	var cache = require('./extends/cache.js');
 
+	var localIpAddress = mtil.getIpAddress();
 
-	var ifaces = os.networkInterfaces();
-	var localIpAddress = '';
-
-	for (var dev in ifaces) {
-		var alias = 0;
-		ifaces[dev].forEach(function(details) {
-			if (details.family == 'IPv4') {
-				if (dev == 'en1') {
-					localIpAddress = details.address;
-				}
-				console.log(dev + (alias ? ':' + alias : ''), details.address);
-				++alias;
-			}
-		});
-	}
-
-	var cache = {
-		path: '',
-		cacheStatus: false,
-		cacheObject: {
-			//path:content
-		},
-		addToCache: function(path) {
-			var self = this;
-			var stat = fs.lstatSync(path);
-			if (!stat.isDirectory()) {
-				this.cacheObject[path] = fs.readFileSync(path, 'utf-8');
-			} else {
-				var files = fs.readdirSync(path);
-				files.forEach(function(file) {
-					var pathName = path + '/' + file;
-					self.addToCache(pathName);
-				});
-			}
-		},
-		getFromCache: function(path) {
-			if (fs.existsSync(path)) {
-				if (this.cacheObject[path] != 'undefined') {
-					return this.cacheObject[path];
-				} else {
-					this.addToCache(path);
-				}
-			} else {
-				console.log(path + ' file dones not exist. can\'t be cache');
-				return false;
-			}
-		},
-		start: function() {
-			// body...
-			this.cacheStatus = true;
-			var path = arguments[0];
-			this.path = path;
-			this.addToCache(path);
-			return this;
-		},
-		clear: function(argument) {
-			// body...
-			this.cacheObject = {};
-		},
-		reflush: function() {
-			this.addToCache(this.path)
-		}
-	};
-
-	cache.start('./view');
+	//cache.start('./view');
 
 	var momery = 1;
 
@@ -140,15 +77,16 @@
 	}).listen(8001, localIpAddress);
 
 	console.log('Server running at ' + localIpAddress + ',port is 8001');
-	/*
+
+})();
+/*
 	var net = require('net');
 	var server = net.createServer(function(socket){
 			socket.write('Echo Server\r\n');
 			socket.pipe(socket);
-		});
-		server.listen(8001,'192.168,2.62');
-	*/
-})();
+	});
+	server.listen(8001,'192.168,2.62');
+*/
 /*
 格式代码
 astyle --style=ansi *.js
