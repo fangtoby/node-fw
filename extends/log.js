@@ -5,7 +5,7 @@ module.exports = function(argument) {
 	//arguments[2] error name
 	if (typeof arguments[0] != 'undefined') {
 		headers = arguments[0];
-		console.log(headers);
+		//console.log(headers);
 		var errorLogPath = './log/access.log';
 		if (!fs.existsSync(errorLogPath)) {
 			fs.open(errorLogPath, 'w', '0777');

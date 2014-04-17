@@ -27,18 +27,17 @@
  *
  */
 (function() {
-	var http = require('http');
-	var url = require('url');
+	var http = require('http'),
+		url = require('url'),
+		crypto = require('crypto'),
+		router = require('./extends/router'),
+		config = require('./main/config'),
+		render = require('./extends/render'),
+		mtil = require('./extends/util'),
+		cache = require('./extends/cache'),
+		localIpAddress = mtil.getIpAddress();
 
-	var router = require('./extends/router.js');
-	var config = require('./main/config.js');
-	var render = require('./extends/render.js');
-	var mtil = require('./extends/util.js');
-	var cache = require('./extends/cache.js');
-
-	var localIpAddress = mtil.getIpAddress();
-
-	//cache.start('./view');
+	cache.start('./view');
 
 	var momery = 1;
 
@@ -59,6 +58,22 @@
 			return;
 		});
 		var pathName = url.parse(req.url).pathname;
+		var cookieInfo = {};
+		req.headers.cookie && req.headers.cookie.split(';').forEach(function(cookie) {
+			var part = cookie.split('=');
+			console.log('cookie.....');
+			console.log(part[0].trim() + (part[1] || '').trim());
+			cookieInfo[part[0]] = part[1];
+		});
+		console.log(req.headers.cookie);
+		if ('undefined' != (typeof cookieInfo.userInfo)) {
+			console.log("cookie user information" + cookieInfo['userInfo']);
+		} else {
+			var md5 = crypto.createHash('md5');
+			var password = md5.update(momery + "nodejs").digest('base64');
+			res.setHeader('Set-Cookie', 'userInfo = ' + password + ';path=/;');
+		}
+
 		if (cache.cacheStatus) {
 			var routes = pathName.split('/');
 			var _controller = routes[1];
@@ -66,7 +81,6 @@
 			var path = './view/' + _controller + '/' + _action + '.html';
 			console.log(path);
 			res.cacheView = cache.getFromCache(path);
-			console.log(res.cacheView);
 		}
 		console.log("Request for " + pathName + " received");
 		try {
@@ -80,26 +94,23 @@
 
 })();
 /*
-	var net = require('net');
-	var server = net.createServer(function(socket){
-			socket.write('Echo Server\r\n');
-			socket.pipe(socket);
-	});
-	server.listen(8001,'192.168,2.62');
-*/
-/*
+   var net = require('net');
+   var server = net.createServer(function(socket){
+   	socket.write('Echo Server\r\n');
+   	socket.pipe(socket);
+   });
+server.listen(8001,'192.168,2.62');
 格式代码
 astyle --style=ansi *.js
 
 启动服务，运用守护进程
- sudo node spawn.js
+sudo node spawn.js
 
 启动服务
 ../node_modules/nodemon/bin/nodemon.js app.js
 
 统计代码的行数
 find ./ -name "*.js" |xargs cat | wc -l
-
 测试服务器负载 网站性能
 http://www.oschina.net/question/223693_44078
 
@@ -122,8 +133,8 @@ Shortest transaction:	        0.00
 
 fs的性能问题
 /usr/bin/siege -r100 -c1000 http://192.168.1.105:8001/handle/index
- return binding.open(pathModule._makeLong(path), stringToFlags(flags), mode);
-                 ^
+return binding.open(pathModule._makeLong(path), stringToFlags(flags), mode);
+^
 Error: EMFILE, too many open files './view/handle/index.html'
 尽量缓存数据，避免在应用中频繁读写io文件数据
 */

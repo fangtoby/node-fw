@@ -11,7 +11,7 @@ function getIpAddress() {
 				if (dev == 'en1') {
 					localIpAddress = details.address;
 				}
-				console.log(dev + (alias ? ':' + alias : ''), details.address);
+				//console.log(dev + (alias ? ':' + alias : ''), details.address);
 				++alias;
 			}
 		});
