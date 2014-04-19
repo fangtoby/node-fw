@@ -36,7 +36,7 @@
 		mtil = require('./extends/util'),
 		cache = require('./extends/cache'),
 		localIpAddress = mtil.getIpAddress();
-
+	//just test from mac
 	cache.start('./view');
 
 	var momery = 1;
