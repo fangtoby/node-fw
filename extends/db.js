@@ -1,10 +1,10 @@
 var mysql = require('mysql');
 
 var pool = mysql.createPool({
-	'host': '192.168.1.108',
+	'host': '127.0.0.1',
 	'user': 'root',
 	'password': 'root',
-	'database': 'financialmanagement',
+	'database': 'km',
 	debug: false,
 });
 
@@ -12,7 +12,7 @@ module.exports = {
 	init: function(callback) {
 		// body...
 		pool.getConnection(function(error, connection) {
-			connection.query('use financialmanagement', function(error, results) {
+			connection.query('use km', function(error, results) {
 				if (error) {
 					callback(error);
 				} else {

@@ -2,34 +2,29 @@
 <div>
 	<button id="click"> Click </button>
 </div>
-<div id="infor">
-
-</div>
 <b>Bob</b>, I'm <b>20</b> years old, I like 
 <b>programming</b>
 <b>
-	<%=content%>
+	<%=pcontent%>
 </b>
-<div>
-	<%=infor%>
+<div id="infor">
+
+	<%
+		var items = param.result;
+		var pix = "";
+		items.forEach(function(item){
+			pix += "<div class='divitem'>";
+			pix += "<div class='innerdiv'>";
+			pix +="<li>"+"uid :"+item['uid']+"</li>";
+			pix +="<li>"+"name :"+item['name']+"</li>";
+			pix +="<li>"+"sex :"+item['sex']+"</li>";
+			pix +="<li>"+"item :"+item['email']+"</li>";
+			pix +="<li>"+"createtime :"+item['createtime']+"</li>";
+			pix +="<li>"+"updatetime :"+item['updatetime']+"</li>";
+			pix += "</div>";
+			pix += "</div>";
+			});
+		return pix;
+	%>
 </div>
-<%
-	return 12;
-%>
-	<%
-		var str = '<div>';
-		for(var i=0;i<30;i++){
-			str += "<div class='text'>"+i+"</div>";
-		}
-		str += '</div>';
-		return str;
-	%>
-	<%
-		var str = '<div>';
-		for(var i=0;i<21;i++){
-			str += "<div class='text'>"+i+"</div>";
-		}
-		str += '</div>';
-		return str;
-	%>
 </div>

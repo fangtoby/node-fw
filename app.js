@@ -51,7 +51,7 @@
 		res.render = render;
 		//set Request Timeout
 		req.socket.removeAllListeners('timeout');
-		req.socket.setTimeout(5000);
+		req.socket.setTimeout(15000);
 		req.socket.on('timeout', function() {
 			console.log('socket timeout');
 			res.render('error', 'Request timeout.');
