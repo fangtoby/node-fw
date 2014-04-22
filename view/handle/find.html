@@ -8,11 +8,10 @@
 	<%=pcontent%>
 </b>
 <div id="infor">
-
 	<%
 		var items = param.result;
 		var pix = "";
-		items.forEach(function(item){
+		for(var item in items){
 			pix += "<div class='divitem'>";
 			pix += "<div class='innerdiv'>";
 			pix +="<li>"+"uid :"+item['uid']+"</li>";
@@ -23,7 +22,7 @@
 			pix +="<li>"+"updatetime :"+item['updatetime']+"</li>";
 			pix += "</div>";
 			pix += "</div>";
-			});
+		}
 		return pix;
 	%>
 </div>
