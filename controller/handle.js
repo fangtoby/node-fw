@@ -72,7 +72,7 @@ module.exports = {
         var startTime = now.getTime();
         var name = self.res.param;
        // db.find('select * from user where name = "'+name.name+'"', function(error, result) {
-        db.find('select * from user limit 1000', function(error, result) {
+        db.find('select * from user', function(error, result) {
             if (!error) {
                 var now = new Date();
                 var endTime = now.getTime();

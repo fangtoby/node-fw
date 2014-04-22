@@ -11,18 +11,20 @@
 	<%
 		var items = param.result;
 		var pix = "";
-		for(var item in items){
-			pix += "<div class='divitem'>";
-			pix += "<div class='innerdiv'>";
-			pix +="<li>"+"uid :"+item['uid']+"</li>";
-			pix +="<li>"+"name :"+item['name']+"</li>";
-			pix +="<li>"+"sex :"+item['sex']+"</li>";
-			pix +="<li>"+"item :"+item['email']+"</li>";
-			pix +="<li>"+"createtime :"+item['createtime']+"</li>";
-			pix +="<li>"+"updatetime :"+item['updatetime']+"</li>";
-			pix += "</div>";
-			pix += "</div>";
-		}
+		console.log(items);
+		items.forEach(function(item){
+		console.log(item);
+				pix += "<div class='divitem'>";
+				pix += "<div class='innerdiv'>";
+				pix +="<li>"+"uid :"+item['uid']+"</li>";
+				pix +="<li>"+"name :"+item['name']+"</li>";
+				pix +="<li>"+"sex :"+item['sex']+"</li>";
+				pix +="<li>"+"item :"+item['email']+"</li>";
+				pix +="<li>"+"createtime :"+item['createtime']+"</li>";
+				pix +="<li>"+"updatetime :"+item['updatetime']+"</li>";
+				pix += "</div>";
+				pix += "</div>";	
+			});
 		return pix;
 	%>
 	
