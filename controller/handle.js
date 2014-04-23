@@ -94,7 +94,7 @@ module.exports = {
                 throw new Error(error);
             }
         }).findByAttribute({
-            'sex': 0
+            'achievement': 1
         }, function(error, result) {
             if (!error) {
                 var now = new Date();

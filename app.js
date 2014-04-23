@@ -36,9 +36,27 @@
 		mtil = require('./extends/util'),
 		cache = require('./extends/cache'),
 		localIpAddress = mtil.getIpAddress();
-	//just test from mac
+	//cache viem
 	cache.start('./view');
-
+	//
+	var async = require('async');
+	async.each([1,2,3],function() {
+		// body...
+		console.log(arguments);
+	},function() {
+		// body...
+		conole.log(arguments);
+		console.log('down');
+	});
+	async.eachSeries([42,53,64],function () {
+		// body...
+		console.log(arguments);
+		console.log(arguments[1]);
+	},function() {
+		// body...
+		console.log(arguments);
+	})
+	//
 	var momery = 1;
 
 	http.createServer(function(req, res) {
