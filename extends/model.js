@@ -6,7 +6,16 @@ module.exports = {
 		//columnsName : value
 	},
 	columns: {
-		//
+		/*
+		{ 	
+			Field: 'updatetime',
+		    Type: 'timestamp',
+		    Null: 'NO',
+		    Key: '',
+		    Default: 'CURRENT_TIMESTAMP',
+		    Extra: 'on update CURRENT_TIMESTAMP' 
+		}
+		*/
 	},
 	init: function(tableName) {
 		if (typeof tableName == 'string') {

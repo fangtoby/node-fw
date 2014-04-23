@@ -77,7 +77,6 @@ module.exports = {
             if (error) {
                 throw new Error(error);
             } else {
-                console.log('findByPk');
                 console.log(result);
             }
         });
@@ -95,7 +94,7 @@ module.exports = {
                 throw new Error(error);
             }
         }).findByAttribute({
-            'achievement': 1
+            'sex': 0
         }, function(error, result) {
             if (!error) {
                 var now = new Date();
@@ -110,24 +109,6 @@ module.exports = {
                 });
             }
         });
-        // db.find('select * from user where name = "'+name.name+'"', function(error, result) {
-
-        // db.find('select * from user', function(error, result) {
-        //     if (!error) {
-        //         var now = new Date();
-        //         var endTime = now.getTime();
-
-        //         var content = 't:' + startTime + '<br \>t:' + endTime + ' select count ' + result.length;
-        //         self.res.render('find', {
-        //             'age': 12,
-        //             'pcontent': content,
-        //             'result': result,
-        //             'infor': JSON.stringify(self.req.headers),
-        //         });
-        //     } else {
-        //         console.log(error);
-        //     }
-        // });
     },
     news: function() {
         console.log('news');
