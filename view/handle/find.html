@@ -9,23 +9,21 @@
 </b>
 <div id="infor">
 	<%
-		var items = param.result;
-		var pix = "";
-		console.log(items);
-		items.forEach(function(item){
-		console.log(item);
-				pix += "<div class='divitem'>";
-				pix += "<div class='innerdiv'>";
-				pix +="<li>"+"uid :"+item['uid']+"</li>";
-				pix +="<li>"+"name :"+item['name']+"</li>";
-				pix +="<li>"+"sex :"+item['sex']+"</li>";
-				pix +="<li>"+"item :"+item['email']+"</li>";
-				pix +="<li>"+"createtime :"+item['createtime']+"</li>";
-				pix +="<li>"+"updatetime :"+item['updatetime']+"</li>";
-				pix += "</div>";
-				pix += "</div>";	
-			});
-		return pix;
+		var vitems = param.result;
+		var vpix = "";
+		for(var vitem in vitems){
+				vpix += "<div class='divitem'>";
+				vpix += "<div class='innerdiv'>";
+				vpix +="<li>"+"uid :"+vitems[vitem]['uid']+"</li>";
+				vpix +="<li>"+"name :"+vitems[vitem]['name']+"</li>";
+				vpix +="<li>"+"sex :"+vitems[vitem]['sex']+"</li>";
+				vpix +="<li>"+"email :"+vitems[vitem]['email']+"</li>";
+				vpix +="<li>"+"createtime :"+vitems[vitem]['createtime']+"</li>";
+				vpix +="<li>"+"updatetime :"+vitems[vitem]['updatetime']+"</li>";
+				vpix += "</div>";
+				vpix += "</div>";	
+		}
+		return vpix;
 	%>
 	
 </div>

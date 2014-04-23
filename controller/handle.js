@@ -3,6 +3,7 @@ var sys = require('sys');
 var fs = require('fs');
 var url = require('url');
 var db = require('../extends/db.js');
+var Model = require('../extends/model.js');
 /*
     var arg = url.pase(req.url).query; //arg => age=100&id=2
     var param = querystring.parse() //param => { age :100 ,id :2}
@@ -71,8 +72,31 @@ module.exports = {
         var now = new Date();
         var startTime = now.getTime();
         var name = self.res.param;
-       // db.find('select * from user where name = "'+name.name+'"', function(error, result) {
-        db.find('select * from user', function(error, result) {
+
+        Model.init('user').findByPK(1, function(error, result) {
+            if (error) {
+                throw new Error(error);
+            } else {
+                console.log('findByPk');
+                console.log(result);
+            }
+        });
+
+        Model.init('user').getColumns(function(error, result) {
+            console.log(result);
+        });
+
+        Model.init('user').deleteByAttribute({
+            uid: 9
+        }, function(error, result) {
+            if (!error) {
+                console.log(result);
+            } else {
+                throw new Error(error);
+            }
+        }).findByAttribute({
+            'achievement': 1
+        }, function(error, result) {
             if (!error) {
                 var now = new Date();
                 var endTime = now.getTime();
@@ -81,13 +105,29 @@ module.exports = {
                 self.res.render('find', {
                     'age': 12,
                     'pcontent': content,
-                    'result':result,
+                    'result': result,
                     'infor': JSON.stringify(self.req.headers),
                 });
-            } else {
-                console.log(error);
             }
         });
+        // db.find('select * from user where name = "'+name.name+'"', function(error, result) {
+
+        // db.find('select * from user', function(error, result) {
+        //     if (!error) {
+        //         var now = new Date();
+        //         var endTime = now.getTime();
+
+        //         var content = 't:' + startTime + '<br \>t:' + endTime + ' select count ' + result.length;
+        //         self.res.render('find', {
+        //             'age': 12,
+        //             'pcontent': content,
+        //             'result': result,
+        //             'infor': JSON.stringify(self.req.headers),
+        //         });
+        //     } else {
+        //         console.log(error);
+        //     }
+        // });
     },
     news: function() {
         console.log('news');

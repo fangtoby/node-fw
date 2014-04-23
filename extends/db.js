@@ -10,58 +10,50 @@ var pool = mysql.createPool({
 
 module.exports = {
 	init: function(callback) {
-		// body...
 		pool.getConnection(function(error, connection) {
 			connection.query('use km', function(error, results) {
-				if (error) {
-					callback(error);
-				} else {
-					console.log('connection mysql success.');
-				}
+				callback(error);
 			});
 		});
 
 	},
 	add: function(sql, callback) {
-		// body...
 		pool.getConnection(function(error, connection) {
-			if (!error) {
-				connection.query(sql, function(error, results) {
-					callback(error, results);
-					connection.release();
-				});
-			} else {
-				console.log(error);
-			}
+			connection.query(sql, function(error, results) {
+				callback(error, results);
+				connection.release();
+			});
 		});
 	},
 	sel: function(sql, callback) {
 		pool.getConnection(function(error, connection) {
-			if (!error) {
-				connection.query(sql, function(error, results, fields) {
-					callback(error, results, fields);
-				});
-			} else {
-				console.log(error);
-			}
+			connection.query(sql, function(error, results, fields) {
+				callback(error, results, fields);
+			});
 		});
 	},
 	find: function(sql, callback) {
 		pool.getConnection(function(error, connection) {
-			if (!error) {
-				connection.query(sql, function(error, results, fields) {
-					callback(error, results, fields);
-					connection.release();
-				});
-			} else {
-				console.log(error);
-			}
+			connection.query(sql, function(error, results, fields) {
+				callback(error, results, fields);
+				connection.release();
+			});
 		});
 	},
-	del: function(sql) {
-		// body...
+	delete: function(sql, callback) {
+		pool.getConnection(function(error, connection) {
+			connection.query(sql, function(error, results) {
+				callback(error, results);
+				connection.release();
+			});
+		});
 	},
-	upd: function(sql) {
-		// body...
+	update: function(sql, callback) {
+		pool.getConnection(function(error, connection) {
+			connection.query(sql, function(error, results) {
+				callback(error, results);
+				connection.release();
+			});
+		});
 	},
 };
