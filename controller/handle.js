@@ -70,7 +70,9 @@ module.exports = {
         var self = this;
         var now = new Date();
         var startTime = now.getTime();
-        db.find('select * from consumertype where Description = 500', function(error, result) {
+        var name = self.res.param;
+       // db.find('select * from user where name = "'+name.name+'"', function(error, result) {
+        db.find('select * from user', function(error, result) {
             if (!error) {
                 var now = new Date();
                 var endTime = now.getTime();
@@ -78,7 +80,8 @@ module.exports = {
                 var content = 't:' + startTime + '<br \>t:' + endTime + ' select count ' + result.length;
                 self.res.render('find', {
                     'age': 12,
-                    'content': content,
+                    'pcontent': content,
+                    'result':result,
                     'infor': JSON.stringify(self.req.headers),
                 });
             } else {

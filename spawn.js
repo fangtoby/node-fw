@@ -4,7 +4,7 @@ var spawn = require('child_process').spawn,
 
 function startServer() {
 	console.log('start server');
-	server = spawn('../node_modules/nodemon/bin/nodemon.js', ['app.js']);
+	server = spawn('./node_modules/nodemon/bin/nodemon.js',['app.js']);
 	console.log('node js pid is ' + server.pid);
 	server.on('close', function(code, signal) {
 			server.kill(signal);

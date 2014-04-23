@@ -30,6 +30,11 @@ body{
 	border: solid 1px #ddd;
 	padding: 10px;
 }
+.data-list{
+	padding:5px;
+	border:solid 1px #ddd;
+	margin-bottom: 3px;
+}
 button{
 	padding: 10px;
 	background: #fff;
