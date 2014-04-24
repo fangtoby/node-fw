@@ -14,7 +14,7 @@ module.exports = {
 		    Key: '',
 		    Default: 'CURRENT_TIMESTAMP',
 		    Extra: 'on update CURRENT_TIMESTAMP' 
-		}
+		    }
 		*/
 	},
 	init: function(tableName) {
