@@ -13,22 +13,25 @@ module.exports = {
 	],
 	db: {
 		main: {
-			'host': '192.168.1.108',
+			'host': '127.0.0.1',
 			'user': 'root',
 			'password': 'root',
-			'database': 'financialmanagement'
+			'database': 'km',
+			debug: false,
 		},
 		slave: {
-			'host': '192.168.1.108',
+			'host': '127.0.0.1',
 			'user': 'root',
 			'password': 'root',
-			'database': 'financialmanagement'
+			'database': 'km',
+			debug: false,
 		},
 		cache: {
-			'host': '192.168.1.108',
+			'host': '127.0.0.1',
 			'user': 'root',
 			'password': 'root',
-			'database': 'financialmanagement'
+			'database': 'km',
+			debug: false,
 		}
 	},
 	log: {

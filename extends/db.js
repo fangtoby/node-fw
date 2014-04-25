@@ -1,12 +1,7 @@
 var mysql = require('mysql');
+var config = require('../main/config.js');
 
-var pool = mysql.createPool({
-	'host': '127.0.0.1',
-	'user': 'root',
-	'password': 'root',
-	'database': 'km',
-	debug: false,
-});
+var pool = mysql.createPool(config.db.main);
 
 module.exports = {
 	init: function(callback) {

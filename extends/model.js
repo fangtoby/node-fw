@@ -10,7 +10,9 @@ var db = require('../extends/db.js');
 
 module.exports = {
 	tableName: '',
-	createTime: new Date(),
+	position: {
+		//id : 23
+	},
 	items: {
 		//columnsName : value
 	},
@@ -77,6 +79,18 @@ module.exports = {
 		this.findBySql(sql, function(error, result) {
 			callback(error, result);
 		});
+	},
+	updateByAttribute: function(where,attr,callback) {
+		// body...
+		var org = arguments.length;
+		switch(org){
+			case 2:
+
+			break;
+			case 3:
+			
+			break;
+		}
 	},
 	save: function(callback) { //init table ,setItems
 		var source = this.items;

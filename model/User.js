@@ -14,6 +14,7 @@ module.exports = function() {
 	}else{
 		this.tableName = 'user';
 	}
+	
 	this.tabList = {
 		1:'all',
 		2:'unique',

@@ -93,9 +93,7 @@ module.exports = {
             } else {
                 throw new Error(error);
             }
-        }).findByAttribute({
-            'sex': name.sex || 0
-        }, function(error, result) {
+        }).findByAttribute(name, function(error, result) {
             if (!error) {
                 var now = new Date();
                 var endTime = now.getTime();
