@@ -9,13 +9,28 @@
 var db = require('../extends/db.js');
 
 module.exports = {
+	//表名，该model里面的大部分方法的实现需要
+	//指定一个目标表，都会从这里取得，如果使用
+	//特定模型里面的this.tableName可以重设该
+	//属性的值，也可以直接设置：
+	//Model.tableName = 'newTableName';
+	//Model.init(newTableName);
 	tableName: '',
+	//当前数据model的检索id，可以
+	//用来指定删除与更新该id对应的
+	//数据库条目。
 	position: {
 		//id : 23
 	},
+	//设定需要更新的列名对应的数据
+	//相应的函数，需要此属性已添加
+	//或更新数据库
 	items: {
 		//columnsName : value
 	},
+	//指定表里面相应的列属性列表
+	//以用来检验上述items的属性
+	//值是否正确
 	columns: {
 		/*
 		{ 	
@@ -80,17 +95,25 @@ module.exports = {
 			callback(error, result);
 		});
 	},
-	updateByAttribute: function(where,attr,callback) {
+	updateByAttribute: function(where, attr, callback) {
 		// body...
 		var org = arguments.length;
-		switch(org){
+		var whereString;
+		var dataString;
+		switch (org) {
 			case 2:
-
-			break;
+				whereString = this.getAndString(this.items);
+				break;
 			case 3:
-			
-			break;
+				whereString = this.getAndString(where);
+				break;
 		}
+		dataString = this.getEqualString(attr);
+		var sql = 'update ' + this.tableName + ' set ' + dataString + ' where ' + whereString;
+		db.update(sql, function(error, result) {
+			callback(error, result);
+		});
+		return this;
 	},
 	save: function(callback) { //init table ,setItems
 		var source = this.items;
@@ -143,5 +166,16 @@ module.exports = {
 			columnstring: columnsArr.join(','),
 			valuestring: valuesArr.join(',')
 		};
+	},
+	getEqualString: function(attr) {
+		var equalString = [];
+		for (var item in attr) {
+			if (typeof attr[item] == 'string') {
+				equalString.push(item + '=' + '"' + attr[item] + '"');
+			} else {
+				equalString.push(item + '=' + attr[item]);
+			}
+		}
+		return equalString.join(',');
 	}
 };
