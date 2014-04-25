@@ -1,7 +1,16 @@
+// Model.init('user').findByPK(1, function(error, result) {
+// 	if (error) {
+// 		throw new Error(error);
+// 	} else {
+// 		console.log(result);
+// 	}
+// });
+
 var db = require('../extends/db.js');
 
 module.exports = {
 	tableName: '',
+	createTime: new Date(),
 	items: {
 		//columnsName : value
 	},

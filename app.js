@@ -55,7 +55,7 @@
 	},function() {
 		// body...
 		console.log(arguments);
-	})
+	});
 	//
 	var momery = 1;
 
