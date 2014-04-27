@@ -111,10 +111,12 @@ module.exports = {
 	findByAttribute: function(attr, callback) {
 		var whereString = this.getAndString(attr);
 		var sql;
-		console.log(attr);
-		if (arguments[0].length == 0 || !attr) {
+		if (!Object.keys(attr).length) {
+			attr = false;
+		}
+		if (!attr) {
 			sql = 'select * from ' + this.tableName;
-		}else{
+		} else {
 			sql = 'select * from ' + this.tableName + ' where ' + whereString;
 		}
 		this.findBySql(sql, function(error, result) {
