@@ -112,9 +112,6 @@ module.exports = {
 		var whereString = this.getAndString(attr);
 		var sql;
 		if (!Object.keys(attr).length) {
-			attr = false;
-		}
-		if (!attr) {
 			sql = 'select * from ' + this.tableName;
 		} else {
 			sql = 'select * from ' + this.tableName + ' where ' + whereString;
