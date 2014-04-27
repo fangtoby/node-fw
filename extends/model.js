@@ -62,6 +62,26 @@ module.exports = {
 			callback(error, result);
 		})
 	},
+	verify: function(attr, callback) {
+		if (arguments.length == 2) {
+			this.items = arguments[0];
+			if (this.items.length) {
+				//todo
+				//循环columns验证attr成员被正确设置
+				arguments[1](true);
+			} else {
+				arguments[1](false);
+			}
+		} else {
+			if (this.items.length) {
+				//todo
+				//循环columns验证attr成员被正确设置
+				arguments[0](true);
+			} else {
+				arguments[0](false);
+			}
+		}
+	},
 	findAll: function(callback) {
 		db.find('select * from ' + this.tableName, function(error, result) {
 			callback(error, result);
@@ -90,7 +110,13 @@ module.exports = {
 	},
 	findByAttribute: function(attr, callback) {
 		var whereString = this.getAndString(attr);
-		var sql = 'select * from ' + this.tableName + ' where ' + whereString;
+		var sql;
+		console.log(attr);
+		if (arguments[0].length == 0 || !attr) {
+			sql = 'select * from ' + this.tableName;
+		}else{
+			sql = 'select * from ' + this.tableName + ' where ' + whereString;
+		}
 		this.findBySql(sql, function(error, result) {
 			callback(error, result);
 		});
@@ -115,10 +141,16 @@ module.exports = {
 		});
 		return this;
 	},
-	save: function(callback) { //init table ,setItems
-		var source = this.items;
-		var dataString = this.getJoinString(source);
-		var sql = 'insert into ' + this.tableName + '(' + dataString.columnstring + ') ' + 'values(' + dataString.valuestring + ')';
+	save: function(attr, callback) { //init table ,setItems
+		var source;
+		var dataString;
+		var sql;
+		if (arguments.length == 2) {
+			this.items = attr;
+		}
+		source = this.items;
+		dataString = this.getJoinString(source);
+		sql = 'insert into ' + this.tableName + '(' + dataString.columnstring + ') ' + 'values(' + dataString.valuestring + ')';
 
 		db.add(sql, function(error, result) {
 			callback(error, result);

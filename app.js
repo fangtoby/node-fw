@@ -64,7 +64,6 @@
 		console.log(momery++);
 
 		res.param = url.parse(req.url, true).query;
-
 		res.config = config;
 		res.render = render;
 		//set Request Timeout

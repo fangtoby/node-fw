@@ -48,7 +48,19 @@ module.exports = {
         });
     },
     add: function() {
-        // body...
+        var data = self.res.param;
+        Model.init('user');
+        Model.setItems(data);
+        Model.verify(function (result) {
+            if(resule){
+                Model.save(function(error, result) {
+
+                });
+            }else{
+                console.log(result);
+            }
+        });
+        
         var self = this;
         var data = Array();
         for (var i = 0; i < 10000; i++) {
