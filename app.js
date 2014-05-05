@@ -41,28 +41,18 @@
 	//
 	var async = require('async');
 	async.each([1,2,3],function() {
-		// body...
 		console.log(arguments);
 	},function() {
-		// body...
 		conole.log(arguments);
 		console.log('down');
 	});
 	async.eachSeries([42,53,64],function () {
-		// body...
 		console.log(arguments);
 		console.log(arguments[1]);
 	},function() {
-		// body...
 		console.log(arguments);
 	});
-	//
-	var momery = 1;
-
 	http.createServer(function(req, res) {
-		//
-		console.log(momery++);
-
 		res.param = url.parse(req.url, true).query;
 		res.config = config;
 		res.render = render;

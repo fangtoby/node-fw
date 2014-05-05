@@ -177,7 +177,7 @@ ul.cr-top-menu-main li a span{
 	width:0;
 	height:25px;
 	}
-ul.cr-top-menu-main li a:hover span{
+ul.cr-top-menu-main li a:hover span , ul.cr-top-menu-main li.active a span{
 	-webkit-transition: all ease-in-out 300ms;
 	-moz-transition: all ease-in-out 300ms;
 	-o-transition:  all ease-in-out 300ms;
@@ -195,37 +195,37 @@ ul.cr-top-menu-main li a.last{
 .i001{
 	background-image:url('images/001.png');
 	 }
-a.i001:hover{
+a.i001:hover , li.active a.i001{
 	background-image:url('images/h001.png');
 	 }
 .i002{
 	background-image:url('images/002.png');
 	 }
-a.i002:hover{
+a.i002:hover, li.active a.i002{
 	background-image:url('images/h002.png');
 	 }
 .i003{
 	background-image:url('images/003.png');
 	 }
-a.i003:hover{
+a.i003:hover, li.active a.i003{
 	background-image:url('images/h003.png');
 	 }
 .i004{
 	background-image:url('images/004.png');
 	 }
-a.i004:hover{
+a.i004:hover, li.active a.i004{
 	background-image:url('images/h004.png');
 	 }
 .i005{
 	background-image:url('images/005.png');
 	 }
-a.i005:hover{
+a.i005:hover, li.active a.i005{
 	background-image:url('images/h005.png');
 	 }
 .i006{
 	background-image:url('images/006.png');
 	 }
-a.i006:hover{
+a.i006:hover, li.active a.i006{
 	background-image:url('images/h006.png');
 	 }
 /** center content **/
@@ -241,7 +241,7 @@ div.cr-right-border{
 	border-right:solid 1px #db6767;
 	}
 div.cr-cc-item{
-	padding:10px 20px 0 20px;
+	padding:10px 0 0 0;
 	background-color:#fff;
 	border:solid 1px #ddd;
 	margin-bottom:10px;
@@ -251,7 +251,7 @@ div.cr-cc-item a.item-right-sign{
 	display:block;
 	height:45px;
 	width:6px;
-	border:solid 1px #db6767;
+	border:solid 1px #ccc;
 	position:absolute;
 	right:-146px;
 	top:50%;
@@ -272,6 +272,7 @@ div.cr-cc-item a.item-right-date{
 	}
 div.cr-cc-more{
 	min-height:20px;
+	margin:0 10px;
 	background:#f7f7f7 url('images/more.png') center center no-repeat;
 	}
 h3{
@@ -279,7 +280,9 @@ h3{
 	padding:0;
 	}
 div.cr-cc-item .cc-title{
-	padding:5px;
+	padding:0 5px;
+	margin-left:-4px;
+	border-left:solid 4px rgb(8, 219, 76);
 	position:relative;
 	}
 div.cr-cc-item .cc-title a.it-opo{
@@ -288,14 +291,14 @@ div.cr-cc-item .cc-title a.it-opo{
 	width:30px;
 	right:0px;
 	top:0;
-	opacity:0.5;
+	opacity:0.2;
 	border:solid #ddd 1px;
 	background:url('images/025.png') center center no-repeat;
 	}
 div.it-opo-menu{
 	position:absolute;
-	right:0px;
-	top:30px;
+	right:-122px;
+	top:-11px;
 	display:none;
 	border:solid 1px #ddd;
 	background-color:#fff;
@@ -324,17 +327,19 @@ div.cr-cc-item .cc-title h3{
 	color:#ff8926;
 	font-size:20px;
 	line-height:40px;
+	font-weight:normal;
 	}
 div.cr-cc-item .cc-categery{
 	background-color:#f7f7f7;
-	padding:5px;
+	padding:5px 0;
+	margin:10px;
 	}
 div.cr-cc-item .cc-categery a{
 	color:#00adfe;
 	text-decoration:underline;
 	}
 div.cr-cc-item .cc-document{
-	padding:10px 0;
+	padding:10px;
 	height:150px;
 	overflow:hidden;
 	}

@@ -14,7 +14,12 @@ function getElementById(idName){
 	return element;
 }
 (function(){
+	
 		window.onload = function() {
+				//使用事件实现延时加载
+				window.onscroll = function(){
+					console.log(this.scrollY);
+				};
 				//sub menu
 				var itOpoElement = getElementByClass('a','it-opo');
 				if(itOpoElement.length){
@@ -44,8 +49,6 @@ function getElementById(idName){
 							if(currentElement.addEventListener){
 								currentElement.addEventListener('click',function(){
 										var obj = this.previousElementSibling.childNodes;
-										console.log(obj);
-										console.log('....');
 										for(var child in obj){
 											var cl = obj[child];
 											if(cl.className == 'cc-document'){
