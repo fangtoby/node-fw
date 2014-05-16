@@ -16,10 +16,6 @@ function getElementById(idName){
 (function(){
 	
 		window.onload = function() {
-				//使用事件实现延时加载
-				window.onscroll = function(){
-					console.log(this.scrollY);
-				};
 				//sub menu
 				var itOpoElement = getElementByClass('a','it-opo');
 				if(itOpoElement.length){
@@ -65,6 +61,7 @@ function getElementById(idName){
 						})(currentElement);	
 					}
 				}
+				//
 				
-		}
+		};
 })(window,undefined);

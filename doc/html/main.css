@@ -343,6 +343,9 @@ div.cr-cc-item .cc-document{
 	height:150px;
 	overflow:hidden;
 	}
+div.cr-cc-item .cc-autoHeight{
+	height:auto;
+	}
 .cc-images{
 	display:block;
 	overflow:hidden;
@@ -360,4 +363,18 @@ div.cr-cc-item .cc-document{
 	width:auto;
 	padding:0;
 	margin:0;
+	}
+.cc-button{
+	display:inline-block;
+	margin:3px;
+	padding:4px 6px;
+	border:solid 1px #ddd;
+	background-color:#f9f9f9;
+	color:##777;
+	cursor:pointer;
+	}
+.cc-button:hover{
+	color:#C00;
+	border-color:#C00;
+	background-color:#fff;
 	}
