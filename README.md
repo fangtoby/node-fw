@@ -30,22 +30,28 @@
 
 #运行介绍
 
-    nodejs 后台应用框架
+nodejs 后台应用框架
+
     var net = require('net');
     var server = net.createServer(function(socket){
     socket.write('Echo Server\r\n');
     socket.pipe(socket);
     });
     server.listen(8001,'192.168,2.62');
-    格式代码
+格式代码
+
     astyle --style=ansi *.js
-    启动服务，运用守护进程
+启动服务，运用守护进程
+
     sudo node spawn.js
-    启动服务
+启动服务
+
     ../node_modules/nodemon/bin/nodemon.js app.js
-    统计代码的行数
+统计代码的行数
+
     find ./ -name "*.js" |xargs cat | wc -l
-    测试服务器负载 网站性能
+测试服务器负载 网站性能
+
     http://www.oschina.net/question/223693_44078
     brew install siege
     sudo ln -s /usr/local/Cellar/siege/3.0.5/bin/siege /usr/bin/siege
@@ -62,7 +68,8 @@
     Failed transactions:	           0
     Longest transaction:	        0.07
     Shortest transaction:	        0.00
-    fs的性能问题
+fs的性能问题
+
     /usr/bin/siege -r100 -c1000 http://192.168.1.105:8001/handle/index
     return binding.open(pathModule._makeLong(path), stringToFlags(flags), mode);
     ^
