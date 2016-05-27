@@ -1,4 +1,4 @@
-# 基本node nfw 0.1后台
+# node 后台mvc框架
 
         node 基本模块构建
         mvc架构实现
